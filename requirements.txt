@@ -1,0 +1,5 @@
+fastapi[standard]>=0.128.0
+fastmcp>=2.14.3
+pandas
+numpy
+streamlit[starlette]>=1.53.0
