@@ -1,7 +1,5 @@
 import streamlit as st
 
-st.set_page_config(page_title="Streamlit-Starlette Demo", layout="wide")
-
 st.title("🚀 Streamlit-Starlette Master Demo")
 
 st.markdown("""
@@ -11,11 +9,11 @@ This application runs as a **single unified ASGI process**, combining the best o
 - **Streamlit**: Beautiful, interactive UI components.
 - **Starlette**: Robust backend features like custom routes, middleware, and sub-app mounting.
 
-### 🛠️ Features
-1. **Custom Middleware**: Security headers, Auth cookies, and IP whitelisting.
-2. **Mounted FastAPI**: REST API with OpenAPI documentation at `/api/docs`.
-3. **FastMCP Server**: Exposing tools via the Model Context Protocol at `/mcp`.
-4. **Static File Serving**: A Tailwind CSS landing page at `/static`.
-5. **SEO Metadata**: `robots.txt`, `sitemap.xml`, and `manifest.json`.
-6. **Sub-Streamlit App**: A dedicated MCP client app mounted at `/mcp-client`.
+### 📚 Tutorial Sections
+1. **Breaking the Sandbox**: Custom API routes, static files, and SEO metadata.
+2. **Framework Interop**: Mounting FastAPI and MCP servers.
+3. **Production Security**: Security headers, cookies, and IP whitelisting.
+4. **Performance**: Background tasks, caching, and lifecycle management.
+
+👈 **Navigate through the sections using the sidebar!**
 """)
