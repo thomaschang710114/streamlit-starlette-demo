@@ -28,7 +28,7 @@ sec2_pages = [
         icon="⚡",
     ),
     st.Page(
-        "apps/section2_02_legacy.py", title="2. Legacy Interop", icon="🕰️"
+        "apps/section2_02_websockets.py", title="2. Real-time WebSockets", icon="📡"
     ),
     st.Page(
         "apps/section2_03_mcp.py",

@@ -1,4 +1,6 @@
 import asyncio
+import random
+import time
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -11,7 +13,10 @@ from starlette.responses import PlainTextResponse
 from starlette.responses import Response
 from starlette.routing import Mount
 from starlette.routing import Route
+from starlette.routing import WebSocketRoute
 from starlette.staticfiles import StaticFiles
+from starlette.websockets import WebSocket
+from starlette.websockets import WebSocketDisconnect
 from streamlit.starlette import App
 
 # ==============================================================================
@@ -79,9 +84,18 @@ async def predict(data: dict):
     return {"result": data.get("value", 0) * 2}
 
 
-# 2.2 Legacy Interop (Flask/Django)
-# Example: Mount("/flask", app=WSGIMiddleware(flask_app))
-# (See slides/code.md for implementation details)
+# 2.2 Real-time WebSockets
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    interval = float(websocket.query_params.get("interval", 1.0))
+    try:
+        while True:
+            data = {"value": random.randint(0, 100), "ts": time.time()}
+            await websocket.send_json(data)
+            await asyncio.sleep(interval)
+    except WebSocketDisconnect:
+        print("Client disconnected")
+
 
 # 2.3 MCP Server Integration
 mcp = FastMCP("Streamlit Integration 🚀")
@@ -228,6 +242,7 @@ routes = [
     Route("/api/background/email", background_email, methods=["POST"]),
     # Section 2: Framework Interop
     Mount("/api", app=api),
+    WebSocketRoute("/realtime", websocket_endpoint),
     Mount("/analytics", app=mcp_app),
 ]
 
