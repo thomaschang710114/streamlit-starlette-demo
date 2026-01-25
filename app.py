@@ -90,7 +90,7 @@ async def sitemap_xml(request):
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>{base_url}/static/</loc>
+    <loc>{base_url}/landing/</loc>
     <priority>0.8</priority>
   </url>
 </urlset>"""
