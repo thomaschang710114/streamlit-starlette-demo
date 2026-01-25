@@ -252,7 +252,7 @@ async def lifespan(app):
     await db_connection.disconnect()
 
 
-# 4.3 Background Tasks
+# 4.2 Background Tasks
 async def send_email_task(email: str):
     print(f"📧 [Background] Starting email delivery to {email}...")
     await asyncio.sleep(2)  # Simulate delay
@@ -266,6 +266,128 @@ async def background_email(request):
     return JSONResponse(
         {"status": "queued", "message": f"Sending email to {email}"}, background=task
     )
+
+
+# 4.3 Exception Handlers
+HTML_404_PAGE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>404 - Page Not Found</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+        }
+        h1 {
+            font-size: 120px;
+            margin: 0;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            font-size: 24px;
+            color: #aaa;
+        }
+        a {
+            color: #feca57;
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <p>Oops! The page you're looking for doesn't exist.</p>
+        <a href="/">← Back to Home</a>
+    </div>
+</body>
+</html>
+"""
+
+HTML_500_PAGE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>500 - Server Error</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #2d1b3d 0%, #1a1a2e 100%);
+            color: #eee;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+        }
+        h1 {
+            font-size: 120px;
+            margin: 0;
+            background: linear-gradient(135deg, #e74c3c, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            font-size: 24px;
+            color: #aaa;
+        }
+        a {
+            color: #9b59b6;
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>500</h1>
+        <p>Something went wrong on our end. Please try again later.</p>
+        <a href="/">← Back to Home</a>
+    </div>
+</body>
+</html>
+"""
+
+
+async def not_found(request, exc):
+    """Custom 404 handler with styled HTML page."""
+    print(f"🚫 [Exception Handler] 404 Not Found: {request.url.path}")
+    return HTMLResponse(content=HTML_404_PAGE, status_code=404)
+
+
+async def server_error(request, exc):
+    """Custom 500 handler with styled HTML page."""
+    print(f"💥 [Exception Handler] 500 Server Error: {request.url.path} - {exc}")
+    return HTMLResponse(content=HTML_500_PAGE, status_code=500)
+
+
+exception_handlers = {
+    404: not_found,
+    500: server_error,
+}
+
+
+# Test endpoint to trigger errors for demo
+async def trigger_error(request):
+    """Trigger a 500 error for testing exception handlers."""
+    raise Exception("This is a test error to demonstrate the 500 handler!")
 
 
 # ==============================================================================
@@ -288,6 +410,7 @@ routes = [
     Route("/api/security/simulate-ip", simulate_ip_policy),
     # Section 4: Performance (Moved up to avoid shadowing)
     Route("/api/background/email", background_email, methods=["POST"]),
+    Route("/api/trigger-error", trigger_error),
     # Section 2: Framework Interop
     Mount("/api", app=api),
     WebSocketRoute("/realtime", websocket_endpoint),
@@ -305,4 +428,5 @@ app = App(
     routes=routes,
     middleware=middleware,
     lifespan=lifespan,
+    exception_handlers=exception_handlers,
 )

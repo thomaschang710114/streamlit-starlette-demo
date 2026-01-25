@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-st.title("3. Background Tasks")
+st.title("2. Background Tasks")
 st.caption("Non-blocking Operations")
 st.markdown("""
 Background tasks allow the server to return a response to the client immediately while 

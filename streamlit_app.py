@@ -58,18 +58,18 @@ sec3_pages = [
 sec4_pages = [
     st.Page(
         "apps/section4_01_lifespan.py",
-        title="1. Lifespan Resources",
+        title="1. Lifespan & Cache",
         icon="♻️",
     ),
     st.Page(
-        "apps/section4_02_cache.py",
-        title="2. Cache Pre-warming",
-        icon="🔥",
+        "apps/section4_02_background_tasks.py",
+        title="2. Background Tasks",
+        icon="⏳",
     ),
     st.Page(
-        "apps/section4_03_background_tasks.py",
-        title="3. Background Tasks",
-        icon="⏳",
+        "apps/section4_03_exception_handler.py",
+        title="3. Exception Handlers",
+        icon="🚨",
     ),
 ]
 
