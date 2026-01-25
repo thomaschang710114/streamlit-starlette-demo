@@ -12,6 +12,4 @@ with col2:
 with col3:
     st.link_button("📱 manifest.json", "/manifest.json", use_container_width=True)
 
-st.info(
-    "These files are served via custom Starlette `Route` definitions in `app.py`."
-)
+st.info("These files are served via custom Starlette `Route` definitions in `app.py`.")

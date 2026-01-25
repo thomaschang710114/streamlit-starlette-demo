@@ -8,16 +8,16 @@ st.markdown("""
 This demo uses `fastmcp.Client` to talk to the MCP server mounted at `/analytics` (in the same process!).
 """)
 
-name = st.text_input(
-    "Enter your name for the MCP greet tool", value="Ford Prefect"
-)
+name = st.text_input("Enter your name for the MCP greet tool", value="Ford Prefect")
 
 client = Client("http://localhost:8000/analytics/mcp")
+
 
 async def call_greet(name: str):
     async with client:
         result = await client.call_tool("greet", {"name": name})
         return result
+
 
 if st.button("Ping MCP Server"):
     with st.spinner("Calling MCP tool..."):

@@ -36,9 +36,7 @@ st.divider()
 
 # --- 1.1d Redirect Response ---
 st.subheader("🔀 Redirect Response")
-st.markdown(
-    "Clicking the link below will trigger a **303 redirect** to my newsletter."
-)
+st.markdown("Clicking the link below will trigger a **303 redirect** to my newsletter.")
 st.link_button("Test Redirect →", "http://localhost:8000/api/redirect-demo")
 
 st.divider()
@@ -58,7 +56,7 @@ if st.button("Fetch with Path Params", key="params"):
         url = f"http://localhost:8000/api/users/{user_id}/{action}"
     else:
         url = f"http://localhost:8000/api/users/{user_id}"
-    
+
     st.caption(f"Calling: `{url}`")
     res = requests.get(url)
     st.json(res.json())

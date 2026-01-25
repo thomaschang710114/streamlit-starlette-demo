@@ -15,9 +15,7 @@ sec1_pages = [
         title="2. Serving Static Assets",
         icon="🌐",
     ),
-    st.Page(
-        "apps/section1_03_seo_metadata.py", title="3. SEO & Metadata", icon="🤖"
-    ),
+    st.Page("apps/section1_03_seo_metadata.py", title="3. SEO & Metadata", icon="🤖"),
 ]
 
 # Section 2: Framework Interop
@@ -44,9 +42,7 @@ sec3_pages = [
         title="1. Security Headers",
         icon="🛡️",
     ),
-    st.Page(
-        "apps/section3_02_cookies.py", title="2. Secure Cookies", icon="🍪"
-    ),
+    st.Page("apps/section3_02_cookies.py", title="2. Secure Cookies", icon="🍪"),
     st.Page(
         "apps/section3_03_ip_whitelist.py",
         title="3. IP Whitelisting",

@@ -93,5 +93,7 @@ export default function(component) {
 """
 
 st.subheader("Live Data Stream")
-ws_monitor = st.components.v2.component(name="ws_monitor", html=HTML_CONTENT, js=JS_CONTENT, isolate_styles=False)
+ws_monitor = st.components.v2.component(
+    name="ws_monitor", html=HTML_CONTENT, js=JS_CONTENT, isolate_styles=False
+)
 ws_monitor(data=interval)

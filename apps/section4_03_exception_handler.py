@@ -41,7 +41,7 @@ with col1:
 with col2:
     st.link_button(
         "Visit /landing/missing.html",
-        url="/landing/missing.html", 
+        url="/landing/missing.html",
         use_container_width=True,
     )
     st.caption("Custom 404 on static mount!")

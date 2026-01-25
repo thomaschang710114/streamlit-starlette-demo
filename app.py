@@ -52,7 +52,9 @@ async def html_response_demo(request):
 # 1.1c Plain Text Response
 async def plain_text_demo(request):
     """Return plain text content."""
-    return PlainTextResponse("Hello from Starlette! This is plain text.\n\nNo formatting, just raw text.")
+    return PlainTextResponse(
+        "Hello from Starlette! This is plain text.\n\nNo formatting, just raw text."
+    )
 
 
 # 1.1d Redirect Response
@@ -66,11 +68,13 @@ async def path_params_demo(request):
     """Demonstrate path parameters in Starlette routes."""
     user_id = request.path_params["user_id"]
     action = request.path_params.get("action", "view")
-    return JSONResponse({
-        "message": f"User {user_id} requested action: {action}",
-        "params": {"user_id": user_id, "action": action},
-        "tip": "Path params are extracted from the URL pattern!"
-    })
+    return JSONResponse(
+        {
+            "message": f"User {user_id} requested action: {action}",
+            "params": {"user_id": user_id, "action": action},
+            "tip": "Path params are extracted from the URL pattern!",
+        }
+    )
 
 
 # 1.2 Serving Static Assets (Handled by Mount in 'routes' list)
