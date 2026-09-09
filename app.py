@@ -248,7 +248,7 @@ async def prewarm_ml_model():
 @asynccontextmanager
 async def lifespan(app):
     print("🚀 App starting: Initializing resources...")
-
+    yield
     # 4.1 & 4.2: Initialize resources & warm cache
     # await db_connection.connect()
     # await prewarm_ml_model()
@@ -256,7 +256,7 @@ async def lifespan(app):
     # Initialize sub-apps (MCP)
     # async with mcp_app.lifespan(app):
     #     yield
-
+    
     # Cleanup
     # print("👋 App shutting down: Cleaning up resources...")
     #  await db_connection.disconnect()
