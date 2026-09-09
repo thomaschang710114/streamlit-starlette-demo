@@ -196,7 +196,13 @@ class CookieMiddleware(BaseHTTPMiddleware):
 
 # 3.3 IP Whitelisting
 class IPWhitelistMiddleware(BaseHTTPMiddleware):
+    # 這些路徑一律放行，不做 IP 檢查（健康檢查/內部探測用）
+    EXEMPT_PATHS = {"/healthz", "/_stcore/health", "/_stcore/host-config"}
+
     async def dispatch(self, request, call_next):
+        if request.url.path in self.EXEMPT_PATHS:
+            return await call_next(request)
+
         client_ip = request.client.host
         # Allow localhost for demo
         if client_ip not in ALLOWED_IPS:
