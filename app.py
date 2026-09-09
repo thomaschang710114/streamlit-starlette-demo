@@ -202,6 +202,9 @@ class IPWhitelistMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
         if request.url.path in self.EXEMPT_PATHS:
             return await call_next(request)
+        path = request.url.path
+        if path == "/healthz" or path.startswith("/_stcore/"):
+            return await call_next(request)
 
         client_ip = request.client.host
         # Allow localhost for demo
