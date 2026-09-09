@@ -250,16 +250,16 @@ async def lifespan(app):
     print("🚀 App starting: Initializing resources...")
 
     # 4.1 & 4.2: Initialize resources & warm cache
-    await db_connection.connect()
-    await prewarm_ml_model()
+    # await db_connection.connect()
+    # await prewarm_ml_model()
 
     # Initialize sub-apps (MCP)
-    async with mcp_app.lifespan(app):
-        yield
+    # async with mcp_app.lifespan(app):
+    #     yield
 
     # Cleanup
-    print("👋 App shutting down: Cleaning up resources...")
-    await db_connection.disconnect()
+    # print("👋 App shutting down: Cleaning up resources...")
+    #  await db_connection.disconnect()
 
 
 # 4.2 Background Tasks
