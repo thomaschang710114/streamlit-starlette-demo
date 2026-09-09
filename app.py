@@ -20,11 +20,7 @@ from starlette.staticfiles import StaticFiles
 from starlette.websockets import WebSocket
 from starlette.websockets import WebSocketDisconnect
 from streamlit.starlette import App
-
-
-async def custom_healthz(request):
-    # 不依賴任何外部連線（DB、Google Sheets），純粹回應「我活著」
-    return JSONResponse({"status": "ok"})
+import streamlit as st
 
 
 # ==============================================================================
@@ -418,6 +414,8 @@ routes = [
     # Route("/healthz", custom_healthz),
     # Section 1: Custom Routes & Static
     Route("/api/raw-data", custom_starlette_data),
+
+    '''
     Route("/api/html-demo", html_response_demo),
     Route("/api/plain-text", plain_text_demo),
     Route("/api/redirect-demo", redirect_demo),
@@ -436,6 +434,7 @@ routes = [
     Mount("/api", app=api),
     WebSocketRoute("/realtime", websocket_endpoint),
     Mount("/analytics", app=mcp_app),
+    '''
 ]
 
 middleware = [
@@ -444,10 +443,10 @@ middleware = [
     Middleware(SecurityHeadersMiddleware),
 ]
 
-app = App(
+app = st.App(
     "streamlit_app.py",
     routes=routes,
-    middleware=middleware,
+    # middleware=middleware,
     lifespan=lifespan,
-    exception_handlers=exception_handlers,
+    # exception_handlers=exception_handlers,
 )
