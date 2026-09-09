@@ -21,6 +21,12 @@ from starlette.websockets import WebSocket
 from starlette.websockets import WebSocketDisconnect
 from streamlit.starlette import App
 
+
+async def custom_healthz(request):
+    # 不依賴任何外部連線（DB、Google Sheets），純粹回應「我活著」
+    return JSONResponse({"status": "ok"})
+
+
 # ==============================================================================
 # SECTION 1: BREAKING THE SANDBOX (Routing & Static Files)
 # ==============================================================================
@@ -399,6 +405,8 @@ async def trigger_error(request):
 # ==============================================================================
 
 routes = [
+    # ⚠️ 把自訂 healthz 放在 routes 清單最前面
+    Route("/healthz", custom_healthz),
     # Section 1: Custom Routes & Static
     Route("/api/raw-data", custom_starlette_data),
     Route("/api/html-demo", html_response_demo),
